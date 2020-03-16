@@ -1,2 +1,2 @@
-# JS.FirstProj
+# JS.Udemy FirstProj
 The repo have my first progress https://www.udemy.com/course/javascript_full/
