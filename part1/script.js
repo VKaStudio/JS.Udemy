@@ -1,5 +1,5 @@
 let money = +prompt("What is your monthly budget?", ''),
-    time = +prompt("Enter a date in the format YYYY-MM-DD", '');
+    time = prompt("Enter a date in the format YYYY-MM-DD", '');
 
 let appData = {
     budget: money,
@@ -22,6 +22,6 @@ for (let i = 0; i < 2; i++) {
     }
 }
 
-appData.moneyPerDay = appData / 30;
+appData.moneyPerDay = appData.budget / 30;
 
-alert("1 day budget = " + moneyForOneDay);
+alert("1 day budget = " + appData.moneyPerDay);
