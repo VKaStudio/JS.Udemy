@@ -10,21 +10,119 @@ const btnStartCanc = document.getElementById('start'),
     getChackBoxSaving = document.querySelector('#savings'),
     getInpChoosSun = document.querySelector('.choose-sum'),
     getInpChoosPerc = document.querySelector('.choose-percent'),
-    getTimeYear = document.querySelector('.year-value'),
-    getTimeMonth = document.querySelector('.month-value'),
-    getTimeDay = document.querySelector('.day-value');
+    timeYear = document.querySelector('.year-value'),
+    timeMonth = document.querySelector('.month-value'),
+    timeDay = document.querySelector('.day-value');
 
 let money, time;
 
-function start() {
-    money = +prompt("What is your monthly budget?", ''),
-    time = prompt("Enter a date in the format YYYY-MM-DD", '');
 
-    while(isNaN(money) || money == '' || money == null) {
+btnStartCanc.addEventListener('click', function () {
+    time = prompt("Enter a date in the format YYYY-MM-DD", ''),
+        money = +prompt("What is your monthly budget?", '');
+
+    while (isNaN(money) || money == '' || money == null) {
         money = +prompt("What is your monthly budget?", '');
     }
-}
-start();
+    appData.budget = money;
+    appData.timeData = time;
+    getAllValue[0].textContent = money.toFixed() + ' UAH';
+    timeYear.value = new Date(Date.parse(time)).getFullYear();
+    timeMonth.value = new Date(Date.parse(time)).getMonth() + 1;
+    timeDay.value = new Date(Date.parse(time)).getDate();
+    btnApprove_1.removeAttribute('disabled');
+    btnApprove_2.removeAttribute('disabled');
+    btnCalc.removeAttribute('disabled');
+});
+
+btnApprove_1.addEventListener('click', function () {
+    let sum = 0;
+    for (let i = 0; i < getAllExpItem.length; i++) {
+        let enterCostItem = getAllExpItem[i].value,
+            howMach = getAllExpItem[++i].value;
+        if ((typeof (enterCostItem)) === 'string' && (typeof (enterCostItem)) != null && (typeof (howMach)) != null && enterCostItem != '' && howMach != '' && enterCostItem.length < 50) {
+            console.log("Validation was successful!")
+            appData.expenses[enterCostItem] = howMach;
+            sum += +howMach;
+        } else {
+            i = 0;
+        }
+    }
+    getAllValue[3].textContent = sum + ' UAH';
+});
+
+btnApprove_2.addEventListener('click', function () {
+    let i = 0;
+    while (i < getOptExp.length) {
+        let question1 = getOptExp[i].value;
+        appData.optionalExpenses[i] = question1;
+        getAllValue[4].textContent += appData.optionalExpenses[i] + ' ';
+        i++;
+    }
+});
+
+btnCalc.addEventListener('click', function () {
+
+    if (appData.budget != undefined) {
+        let getNumb = parseInt(getAllValue[3].textContent.match(/\d+/));
+
+        if (getNumb) {
+            appData.moneyPerDay = ((appData.budget - getNumb) / 30).toFixed();
+        } else {
+            appData.moneyPerDay = (appData.budget / 30).toFixed();
+        }
+
+        getAllValue[1].textContent = appData.moneyPerDay + ' UAH';
+
+        if (appData.moneyPerDay < 500) {
+            getAllValue[2].textContent = 'Really just ' + appData.moneyPerDay + " UAH? Are you poor? =(";
+        } else if (appData.moneyPerDay > 500 && appData.moneyPerDay < 1500) {
+            getAllValue[2].textContent = appData.moneyPerDay + " UAH Hm.. its not bad";
+        } else if (appData.moneyPerDay > 1500 && appData.moneyPerDay < 4500) {
+            getAllValue[2].textContent = appData.moneyPerDay + " UAH Wow! You are rich!";
+        } else if (appData.moneyPerDay > 4500) {
+            getAllValue[2].textContent = appData.moneyPerDay + " UAH (O_o) Are you crazy?";
+        }
+    } else {
+        getAllValue[2].textContent = "Error! Please click to Start calculation"
+    }
+});
+
+getInpChoosIncome.addEventListener('input', function () {
+    let save = getInpChoosIncome.value;
+    appData.income = save.split(', ');
+    getAllValue[5].textContent = appData.income;
+});
+
+getChackBoxSaving.addEventListener('click', function () {
+    if (appData.savings == true) {
+        appData.savings = false;
+    } else {
+        appData.savings = true;
+    }
+});
+
+getInpChoosSun.addEventListener('input', function () {
+    if (appData.savings == true) {
+        let sum = +getInpChoosSun.value,
+            percent = +getInpChoosPerc.value;
+        appData.monthIncome = sum / 100 / 12 * percent;
+        appData.yearIncome = sum / 100 * percent;
+        getAllValue[6].textContent = appData.monthIncome.toFixed(1);
+        getAllValue[7].textContent = appData.yearIncome.toFixed(1);
+    }
+});
+
+getInpChoosPerc.addEventListener('input', function () {
+    if (appData.savings == true) {
+        let sum = +getInpChoosSun.value,
+            percent = +getInpChoosPerc.value;
+        appData.monthIncome = sum / 100 / 12 * percent;
+        appData.yearIncome = sum / 100 * percent;
+        getAllValue[6].textContent = appData.monthIncome.toFixed(1);
+        getAllValue[7].textContent = appData.yearIncome.toFixed(1);
+    }
+});
 
 let appData = {
     budget: money,
@@ -32,59 +130,5 @@ let appData = {
     expenses: {},
     optionalExpenses: {},
     income: [],
-    savings: true
+    savings: false
 }
-
-function chooseExpenses() {
-    for (let i = 0; i < 2; i++) {
-        let enterCostItem = prompt("Enter a mandatory cost item this month", ''),
-            howMach = +prompt("How much will it cost?", '');
-        if ( (typeof(enterCostItem)) === 'string' && (typeof(enterCostItem)) != null && (typeof(howMach)) != null && enterCostItem != '' && howMach != '' && enterCostItem.length < 50) {
-            console.log("Validation was successful!")
-            appData.expenses[enterCostItem] = howMach;
-        } else {
-            i = 0;
-        }
-    }
-}
-chooseExpenses();
-
-function detectDayBudget() {
-    appData.moneyPerDay = (appData.budget / 30).toFixed();
-    alert("1 day budget = " + appData.moneyPerDay);
-}
-detectDayBudget();
-
-function detectLevel() {
-    if (appData.moneyPerDay < 500) {
-        alert('Really just ' + appData.moneyPerDay + "? Are you poor? =(");
-    } else if (appData.moneyPerDay > 500 && appData.moneyPerDay < 1500) {
-        alert(appData.moneyPerDay + " Hm.. its not bad");
-    } else if (appData.moneyPerDay > 1500 && appData.moneyPerDay < 4500) {
-        alert(appData.moneyPerDay + " Wow! You are rich!");
-    } else if (appData.moneyPerDay > 4500) {
-        alert(appData.moneyPerDay + " Are you crazy?");
-    }
-}
-detectLevel();
-
-function checkSavings() {
-    if(appData.savings == true) {
-        let save = +prompt("What is the amount of savings?", ''),
-            percent = +prompt("At what percentage?", '');
-        
-        appData.monthIncome = save / 100 / 12 * percent;
-        alert('Income per month from your deposit: ' + appData.monthIncome);
-    }
-}
-checkSavings();
-
-function chooseOptExpenses() {
-    let i = 1;
-    while(i < 4) {
-        let question1 = prompt("An item of optional expenses?", '');
-        appData.optionalExpenses[i] = question1;
-        i++;
-    }
-}
-chooseOptExpenses();
