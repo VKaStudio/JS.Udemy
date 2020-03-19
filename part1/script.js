@@ -1,3 +1,19 @@
+const btnStartCanc = document.getElementById('start'),
+    getAllValue = document.querySelectorAll('div[class$="value"]'),
+    getAllExpItem = document.querySelectorAll('.expenses-item'),
+    getBtns = document.getElementsByTagName('button'),
+    btnApprove_1 = getBtns[0],
+    btnApprove_2 = getBtns[1],
+    btnCalc = getBtns[2],
+    getOptExp = document.querySelectorAll('.optionalexpenses-item'),
+    getInpChoosIncome = document.querySelector('.choose-income'),
+    getChackBoxSaving = document.querySelector('#savings'),
+    getInpChoosSun = document.querySelector('.choose-sum'),
+    getInpChoosPerc = document.querySelector('.choose-percent'),
+    getTimeYear = document.querySelector('.year-value'),
+    getTimeMonth = document.querySelector('.month-value'),
+    getTimeDay = document.querySelector('.day-value');
+
 let money, time;
 
 function start() {
