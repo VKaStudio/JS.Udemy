@@ -51,3 +51,7 @@ function copyObj(mainObject){
 
 const NEW_OPTIONS = copyObj(OPTIONS); // Create clone of object "OPTIONS"
 console.log(NEW_OPTIONS);
+
+// Create new copy of object using the method Object.assign();
+const SEC_NEW_OPTIONS = Object.assign({}, OPTIONS); 
+console.log(SEC_NEW_OPTIONS);
