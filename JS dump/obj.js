@@ -39,3 +39,15 @@ OPTIONS.makePixel();
 // Destructuring - is a special syntax that allows us to "unpack" arrays or objects into a bunch of variables
 const {border, bg} = OPTIONS.colors;
 console.log(`Variable border: ${border} and bg: ${bg}`);
+
+// Function for copy of main object
+function copyObj(mainObject){
+    const newObject = {};
+    for (let key in mainObject) {
+        newObject[key] = mainObject[key];
+    }
+    return newObject;
+};
+
+const NEW_OPTIONS = copyObj(OPTIONS); // Create clone of object "OPTIONS"
+console.log(NEW_OPTIONS);
