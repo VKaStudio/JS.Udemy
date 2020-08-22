@@ -39,5 +39,5 @@ const nameOfMovie = document.querySelectorAll('.promo__interactive-item');
 movieDB.movies.sort();
 
 nameOfMovie.forEach((item, i) => {
-    item.textContent = movieDB.movies[i];
-})
+    item.textContent = `${++i} ${movieDB.movies[--i]}`;
+});
