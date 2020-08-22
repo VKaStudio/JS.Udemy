@@ -18,7 +18,7 @@ const movieDB = {
     movies: [
         "Logan",
         "Justice League",
-        "La La Land",
+        "La La Land",   
         "Whiplash",
         "Scott Pilgrim vs. the World"
     ]
@@ -39,5 +39,6 @@ const nameOfMovie = document.querySelectorAll('.promo__interactive-item');
 movieDB.movies.sort();
 
 nameOfMovie.forEach((item, i) => {
-    item.textContent = `${++i} ${movieDB.movies[--i]}`;
+    const div = '<div class="delete"></div>';
+    item.innerHTML = `${++i} ${movieDB.movies[--i]}${div}`;
 });
