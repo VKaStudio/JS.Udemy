@@ -32,3 +32,12 @@ document.querySelector('.promo__genre').textContent = 'DRAMA';
 
 // 3. Change poster background
 document.querySelector('.promo__bg').style.background = "url('./img/bg.jpg')";
+
+// Make list of Films
+const nameOfMovie = document.querySelectorAll('.promo__interactive-item');
+
+movieDB.movies.sort();
+
+nameOfMovie.forEach((item, i) => {
+    item.textContent = movieDB.movies[i];
+})
