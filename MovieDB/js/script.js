@@ -24,3 +24,5 @@ const movieDB = {
     ]
 };
 
+// 1. Remove ADS from the site
+document.querySelector('.promo__adv').remove();
