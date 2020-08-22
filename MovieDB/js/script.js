@@ -29,3 +29,6 @@ document.querySelector('.promo__adv').remove();
 
 // 2. Rename the genre of the film, change "comedy" to "drama"
 document.querySelector('.promo__genre').textContent = 'DRAMA';
+
+// 3. Change poster background
+document.querySelector('.promo__bg').style.background = "url('./img/bg.jpg')";
