@@ -13,6 +13,10 @@
 5) Добавить нумерацию выведенных фильмов */
 
 'use strict';
+const movieList = document.querySelector('ul.promo__interactive-list'),
+      addForm = document.querySelector('form.add'),
+      inputForm = addForm.querySelector('.adding__input'),
+      checkboxForm = addForm.querySelector('[type="checkbox"]');
 
 const movieDB = {
     movies: [
@@ -34,11 +38,37 @@ document.querySelector('.promo__genre').textContent = 'DRAMA';
 document.querySelector('.promo__bg').style.background = "url('./img/bg.jpg')";
 
 // Make list of Films
-const nameOfMovie = document.querySelectorAll('.promo__interactive-item');
+function makeList(films, perent) {
+    
+    perent.innerHTML = '';
 
-movieDB.movies.sort();
+    films.sort();
 
-nameOfMovie.forEach((item, i) => {
-    const div = '<div class="delete"></div>';
-    item.innerHTML = `${++i} ${movieDB.movies[--i]}${div}`;
+    films.forEach((film, i) => {
+        perent.innerHTML += `
+        <li class="promo__interactive-item">${++i} ${film}
+        <div class="delete"></div></li>
+        `;
+    })
+}
+makeList(movieDB.movies, movieList);
+
+// Add news movies
+addForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    
+    const newFilm = inputForm.value,
+          isFavorit = checkboxForm.checked;
+
+    
+    if (newFilm) {
+        if (newFilm.length > 21) {
+            newFilm.slice(0, -5);
+        }
+
+        movieDB.movies.push(newFilm);
+        makeList(movieDB.movies, movieList);
+    }
+
+    event.target.reset();
 });
