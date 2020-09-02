@@ -69,5 +69,9 @@ addForm.addEventListener('submit', (event) => {
         makeList(movieDB.movies, movieList);
     }
 
+    if (isFavorit) {
+        console.log(`Adding favorite film...`);
+    }
+
     event.target.reset();
 });
