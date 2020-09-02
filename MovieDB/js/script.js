@@ -1,17 +1,3 @@
-/* Задания на урок:
-
-1) Удалить все рекламные блоки со страницы (правая часть сайта)
-
-2) Изменить жанр фильма, поменять "комедия" на "драма"
-
-3) Изменить задний фон постера с фильмом на изображение "bg.jpg". Оно лежит в папке img.
-Реализовать только при помощи JS
-
-4) Список фильмов на странице сформировать на основании данных из этого JS файла.
-Отсортировать их по алфавиту 
-
-5) Добавить нумерацию выведенных фильмов */
-
 'use strict';
 const movieList = document.querySelector('ul.promo__interactive-list'),
       addForm = document.querySelector('form.add'),
@@ -50,6 +36,18 @@ function makeList(films, perent) {
         <div class="delete"></div></li>
         `;
     })
+
+    // Function for remove movie items
+    const deleteItem = document.querySelectorAll('.delete');
+
+    deleteItem.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            btn.parentNode.remove();
+            movieDB.movies.splice(i, 1);
+
+            makeList(films, perent);
+        })
+    })
 }
 makeList(movieDB.movies, movieList);
 
@@ -57,13 +55,14 @@ makeList(movieDB.movies, movieList);
 addForm.addEventListener('submit', (event) => {
     event.preventDefault();
     
-    const newFilm = inputForm.value,
-          isFavorit = checkboxForm.checked;
+    let newFilm = inputForm.value;
+    const isFavorit = checkboxForm.checked;
 
     
     if (newFilm) {
+
         if (newFilm.length > 21) {
-            newFilm.slice(0, -5);
+            newFilm = `${newFilm.substring(0, 22)}...`;
         }
 
         movieDB.movies.push(newFilm);
